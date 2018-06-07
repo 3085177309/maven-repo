@@ -1,7 +1,5 @@
 
-#²Ö¿âÅäÖÃËµÃ÷
-
-###1¡¢build.gradle
+### 1ã€build.gradle
 ```groovy
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
@@ -10,7 +8,7 @@ tasks.withType(JavaCompile) {
 apply from: "${rootProject.projectDir}/build-maven.gradle"
 ```
 
-###2¡¢build-maven.gradle
+### 2ã€build-maven.gradle
 ```groovy
 def  maven_workerdir = 'f:\\maven-repo'
 
@@ -30,7 +28,7 @@ allprojects{
 
 
 	configurations.all {
-		//Ã¿¸ô24Ğ¡Ê±¼ì²éÔ¶³ÌÒÀÀµÊÇ·ñ´æÔÚ¸üĞÂ
+		//æ¯éš”24å°æ—¶æ£€æŸ¥è¿œç¨‹ä¾èµ–æ˜¯å¦å­˜åœ¨æ›´æ–°
 		//resolutionStrategy.cacheChangingModulesFor 24, 'hours'
 		resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 	}
@@ -44,7 +42,7 @@ publishing {
 			groupId project.group
 			artifactId project.name
 			version project.version
-			//ÈôÊÇwar°ü£¬¾ÍĞ´components.web,ÈôÊÇjar°ü£¬¾ÍĞ´components.java
+			//è‹¥æ˜¯waråŒ…ï¼Œå°±å†™components.web,è‹¥æ˜¯jaråŒ…ï¼Œå°±å†™components.java
 			from components.java
 		}
 	}
@@ -53,41 +51,5 @@ publishing {
 			url = maven_workerdir
 		}
 	}
-}
-
-
-task gitCloneInit(type:Exec){
-
-	commandLine 'cmd', '/c', ' IF NOT EXIST ' + maven_workerdir + ' mkdir ' + maven_workerdir
-	//println getCommandLine()
-
-}
-
-gitCloneInit.doFirst {
-	workingDir maven_workerdir
-	commandLine   'cmd', '/c', ' IF NOT EXIST ' + maven_workerdir+'\\.git ' + 'git clone https://github.com/3085177309/maven-repo.git . '
-	println getCommandLine()
-	exec()
-}
-
-gitCloneInit.doLast{
-	workingDir maven_workerdir
-	commandLine   'cmd', '/c', ' IF  EXIST ' + maven_workerdir+'\\.git ' + 'git config user.name SunDeny '
-	println getCommandLine()
-	exec()
-	commandLine   'cmd', '/c', ' IF  EXIST ' + maven_workerdir+'\\.git ' + 'git config user.email 3085177309@qq.com  '
-	println getCommandLine()
-	exec()
-}
-
-
-task gitPushToGithubMaven(type:Exec){
-
-	dependsOn(gitCloneInit)
-
-	workingDir maven_workerdir
-	commandLine 'cmd', '/c', 'IF EXIST  gitPush.bat  call  gitPush.bat'
-	//println getCommandLine()
-
 }
 ```

@@ -1,5 +1,6 @@
 
 ### 1、build.gradle
+
 ```groovy
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
@@ -28,7 +29,7 @@ allprojects{
 
 
 	configurations.all {
-		//每隔24小时检查远程依赖是否存在更新
+		//每隔24小时检查远程依赖是否存在更�?
 		//resolutionStrategy.cacheChangingModulesFor 24, 'hours'
 		resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 	}
